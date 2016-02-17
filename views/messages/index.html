@@ -4,8 +4,8 @@
         if(previewButton && document.getElementById("preview-block")) {
             previewButton.onclick = function(){
                 var str = "<h3>" + document.forms[0].name.value + "</h3>";
-                str += "<p>" + "Email: " + document.forms[0].email.value + "</p>";
-                str += "<p>" + "Message: " +  document.forms[0].message.value + "</p>";
+                    str += "<p>" + "Email: " + document.forms[0].email.value + "</p>";
+                    str += "<p>" + "Message: " +  document.forms[0].message.value + "</p>";
                 document.getElementById("message-preview-wrapper").style.display = "block";
                 document.getElementById("preview-block").innerHTML = str;
             }

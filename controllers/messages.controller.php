@@ -9,8 +9,10 @@ class MessagesController extends Controller{
     public function index(){
         // Записываем в данные информацию о всех страничках из модели Messages
         $this->data['messages'] = $this->model->getList();
-
-      if( !is_null($_POST['name']) && !is_null($_POST['email']) && !is_null($_POST['message']) && strlen($_POST['name']) > 0 && strlen($_POST['email']) > 0 && strlen($_POST['message']) > 0 ) {
+      @$name = $_POST['name'];
+      @$email = $_POST['email'];
+      @$message = $_POST['message'];
+      if( !is_null($name) && !is_null($email) && !is_null($message) && strlen($name) > 0 && strlen($email) > 0 && strlen($message) > 0 ) {
             $res_post = $_POST;
             $this->model->save($res_post);
           Router::redirect('/');
