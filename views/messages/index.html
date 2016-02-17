@@ -1,0 +1,53 @@
+<script type="text/javascript">
+    window.onload = function(){
+        previewButton = document.getElementById("preview-button");
+        if(previewButton && document.getElementById("preview-block")) {
+            previewButton.onclick = function(){
+                var str = "<h3>" + document.forms[0].firstname.value + "</h3>";
+                str += "<p>" + "Email: " + document.forms[0].email.value + "</p>";
+                str += "<p>" + "Message: " +  document.forms[0].message.value + "</p>";
+                document.getElementById("message-preview-wrapper").style.display = "block";
+                document.getElementById("preview-block").innerHTML = str;
+            }
+        }
+    }
+</script>
+<h3>Sort by</h3>
+<div class="btn-group btn-group-justified" role="group" aria-label="...">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default">Name</button>
+    </div>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default">Email</button>
+    </div>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default">Date</button>
+    </div>
+</div>
+
+<?php foreach($data['messages'] as $page_data) { ?>
+
+<div style="margin-bottom: 20px;">
+    <? if ($page_data['modified_by_admin']==0){
+     echo $page_data['date_time'].'<br>'.$page_data['name'].'<br>'.$page_data['message'].'<br>';
+    }
+    ?>
+</div>
+
+<?php } ?>
+<div class="panel panel-info" id="message-preview-wrapper" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">Message preview</h3>
+    </div>
+    <div class="panel-body" id="preview-block"></div>
+</div>
+<h3>Leave your feedback:</h3>
+<form action="" method="post">
+    <input type="text" class="form-control" name="name" placeholder="Please enter your name" value="" /><br/>
+    <input type="text" class="form-control" name="email" placeholder="Please enter your Email" value="" /><br/>
+    <textarea name="message" class="form-control" placeholder="Your message"></textarea><br/>
+    <button class="btn btn-lg btn-primary btn-block" type="button" id="preview-button">Preview</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Send</button>
+</form>
+
+

@@ -34,7 +34,12 @@ class Message extends Model {
     }
 
     public function getList(){
-        $sql = "select * from messages where 1";
+        $sql = "select * from messages where 1 order by  date_time";
+        return $this->db->query($sql);
+    }
+
+    public function sortBy($sort){
+        $sql = "select * from messages where 1 order by".$sort;
         return $this->db->query($sql);
     }
 
