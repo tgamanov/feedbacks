@@ -9,10 +9,14 @@ class MessagesController extends Controller{
     public function index(){
         // Записываем в данные информацию о всех страничках из модели Messages
         $this->data['messages'] = $this->model->getList();
-      @$name = $_POST['name'];
-      @$email = $_POST['email'];
-      @$message = $_POST['message'];
-      if( !is_null($name) && !is_null($email) && !is_null($message) && strlen($name) > 0 && strlen($email) > 0 && strlen($message) > 0 ) {
+        $name = isset($_POST['name']);
+        $email = isset($_POST['email']);
+        $message = isset($_POST['message']);
+
+
+      if ( $name && $email &&  $message && strlen ($_POST['name'])>0 && strlen ($_POST['email'])>0 && strlen ($_POST['message'])>0)//check if submit and post is not empy. TODO add validation of the email field
+      {
+
             $res_post = $_POST;
             $this->model->save($res_post);
           Router::redirect('/');
