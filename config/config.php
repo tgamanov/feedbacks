@@ -12,7 +12,7 @@ Config::set('routes', array(
 
 Config::set('default_route', 'default');
 Config::set('default_language', 'en');
-Config::set('default_controller', 'messages');
+Config::set('default_controller', 'posts');
 Config::set('default_action', 'index');
 
 Config::set('db.host', '127.0.0.1');
@@ -21,3 +21,6 @@ Config::set('db.password', 'root');
 Config::set('db.db_name', 'scotchbox');
 
 Config::set('salt', 'jd7sjdfdfdfasdasdasdccc3sdkd964he7e');
+
+Config::set('admin_login', 'admin');
+Config::set('admin_password', md5('123'));

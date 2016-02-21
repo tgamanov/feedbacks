@@ -1,56 +1,89 @@
 <?php
 
-class MessagesController extends Controller{
-    public function __construct($data = array()){
+class MessagesController extends Controller
+{
+    public function __construct($data = array())
+    {
         parent::__construct($data);
         $this->model = new Message();
     }
+
     // pages/
-    public function index(){
+    public function index()
+    {
         // Записываем в данные информацию о всех страничках из модели Messages
         $this->data['messages'] = $this->model->getList();
         $name = isset($_POST['name']);
         $email = isset($_POST['email']);
         $message = isset($_POST['message']);
+        //$image = isset($_FILES['name']);
 
-
-      if ( $name && $email &&  $message && strlen ($_POST['name'])>0 && strlen ($_POST['email'])>0 && strlen ($_POST['message'])>0)//check if submit and post is not empy. TODO add validation of the email field
-      {
-
+        if ($name && $email && $message && strlen($_POST['name']) > 0 && strlen($_POST['email']) > 0 && strlen($_POST['message']) > 0)//check if submit and post is not empy. TODO add validation of the email field
+        {
             $res_post = $_POST;
             $this->model->save($res_post);
-          Router::redirect('/');
-      }
+
+           //Router::redirect('/');
         }
-    public function sortBy(){
-        $this->data['messages']=$this->model->sortBy();
+        if ($_FILES['image']['size'] > 0) {
+
+            $errors = "";
+            $file_name = $_FILES['image']['name'];
+            $file_tmp = $_FILES['image']['tmp_name'];
+
+            @ $file_ext = strtolower(end(explode('.', $_FILES['image']['name'])));
+
+            $expensions = array("jpeg", "jpg", "png");
+
+            if (in_array($file_ext, $expensions) === false) {
+                $errors = '<div class="notice-box bg-danger">extension not allowed, please choose a JPEG or PNG file.</div>';
+            }
+
+            if (empty($errors) == true) {
+                move_uploaded_file($file_tmp, "images/" . $file_name);
+               // $this->model->save($image);
+                echo '<div class="notice-box bg-success">Success</div>';
+            } else {
+                echo $errors;
+            }
+
+        }
+    }
+
+    public function sortBy()
+    {
+        $this->data['messages'] = $this->model->sortBy();
     }
 
     // view/{some_param}
-    public function view(){
+    public function view()
+    {
         $params = App::getRouter()->getParams(); // это кажется лишнее, так как тоже самое есть у нас в $this->params
         // Если есть {some_param} в URL
-        if ( isset($this->params[0]) ){
+        if (isset($this->params[0])) {
             // Приводим {SoMe_PaRAm} в нижний регистр
             $message = strtolower($this->params[0]);
             // Из модели получаем нужную страницу {some_param}
             $this->data['messages'] = $this->model->getByMessage($message);
         }
     }
+
     // admin/pages
-    public function admin_index(){
+    public function admin_index()
+    {
         // Записываем в данные информацию о всех страничках из модели Page
         $this->data['messages'] = $this->model->getList();
     }
 
     // admin/pages/add
-    public function admin_add(){
+    public function admin_add()
+    {
         // Если пришел POST
-        if ( $_POST ){
+        if ($_POST) {
             // Записываем данные с $_POST в БД
             $result = $this->model->save($_POST);
             // если запись прошла успешно ($result == true)
-            if ( $result ){
+            if ($result) {
                 Session::setFlash('Message has been saved.');
             } else {
                 Session::setFlash('Error.');
@@ -61,15 +94,16 @@ class MessagesController extends Controller{
     }
 
     // admin/pages/edit/[{some_param}]
-    public function admin_edit(){
+    public function admin_edit()
+    {
         // Если пришел POST
-        if ( $_POST ){
+        if ($_POST) {
             // Если в $_POST есть значения id, то записываем его. Если нет, то null
             $id = isset($_POST['id']) ? $_POST['id'] : null;
             // Записываем данные с $_POST в БД. Если $id == null - это новая запись, если нет - изменить старую запись с id == $id
             $result = $this->model->save($_POST, $id);
             // если запись прошла успешно ($result == true)
-            if ( $result ){
+            if ($result) {
                 Session::setFlash('Messages has been saved.');
             } else {
                 Session::setFlash('Error.');
@@ -80,7 +114,7 @@ class MessagesController extends Controller{
 
         // Если пришел GET
         // если есть параметр {some_param} (например URL admin/pages/edit/1)
-        if ( isset($this->params[0]) ){
+        if (isset($this->params[0])) {
             // Добавляем в данные страничку, где id == {some_param}
             $this->data['messages'] = $this->model->getById($this->params[0]);
         } else {
@@ -91,12 +125,13 @@ class MessagesController extends Controller{
     }
 
     // admin/pages/delete/{some_param}
-    public function admin_delete(){
+    public function admin_delete()
+    {
         // если есть параметр {some_param} (например URL admin/pages/delete/1)
-        if ( isset($this->params[0]) ){
+        if (isset($this->params[0])) {
             // Удаляем страничку, где id == {some_param}
             $result = $this->model->delete($this->params[0]);
-            if ( $result ){
+            if ($result) {
                 // Если удалили
                 Session::setFlash('Messages has been deleted.');
             } else {

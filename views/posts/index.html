@@ -1,28 +1,32 @@
 <!-- sort buttons -->
 <h3>Sort by</h3>
-<div class="btn-group btn-group-justified" role="group">
+<div class="btn-group btn-group-justified" role="group" aria-label="...">
     <div class="btn-group" role="group">
-        <a class="btn btn-default" id="name-btn">Name</a>
+        <button class="btn btn-default" type="button" id="name-btn">Name</button>
     </div>
     <div class="btn-group" role="group">
-        <a class="btn btn-default" id="email-btn">Email</a>
+        <button type="button" class="btn btn-default" id="email-btn">Email</button>
     </div>
     <div class="btn-group" role="group">
-        <a class="btn btn-default" id="num-btn">Date</a>
+        <button type="button" class="btn btn-default" id="num-btn">Date</button>
     </div>
 </div>
 
 <!--list of the messages-->
 <div class="feedback-wrapper">
-    <?php foreach($data['messages'] as $page_data) { ?>
+
+
+
+    <?php foreach($data as $line) { ?>
     <div class="feedback-item">
-        <? if ($page_data['modified_by_admin']==0){
+        <?php
+        echo '<img class="image-left" src="'.$line['photo_path'].'">';
         echo
-        '<p class="feedback-time">'.'<b>Date: </b><span class="f-date">'.$page_data['date_time'].'</span></p>'.
-        '<p class="feedback-name">'.'<b>Name: </b><span class="f-name">'.$page_data['name'].'</span></p>'.
-        '<p class="feedback-email">'.'<b>Email: </b><span class="f-email">'.$page_data['email'].'</span></p>'.
-        '<p class="feedback-message">'.'<b>Message: </b><span class="f-message">'.$page_data['message'].'</span></p>';
-        }
+        '<div class="block-info"><p class="feedback-time">'.'<b>Date: </b><span class="f-date">'.$line['date_time'].'</span></p>'.
+        '<p class="feedback-name">'.'<b>Name: </b><span class="f-name">'.$line['name'].'</span></p>'.
+        '<p class="feedback-email">'.'<b>Email: </b><span class="f-email">'.$line['email'].'</span></p>'.
+        '<p class="feedback-message">'.'<b>Message: </b><span class="f-message">'.$line['message'].'</span></p>'.
+        '<p class="feedback-message"><b>Has been modified by administartor.</b></p></div>';
         ?>
     </div>
     <?php } ?>
@@ -41,7 +45,7 @@
     <div class="row"><input type="email" required class="form-control" name="email" placeholder="Please enter your Email" value=""/></div>
     <div class="row"><textarea name="message" required class="form-control" placeholder="Your message"></textarea></div>
     <div class="row"><button class="btn btn-lg btn-primary btn-block" type="button" id="preview-button">Preview</button></div>
-    <div class="row"><input type = "file" name="image" /></div>
-    <div class="row"><button class="btn btn-lg btn-primary btn-block" type="submit">Send</button></div>
+    <div class="row"><input type="file" name="image" /></div>
+    <div class="row"><button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Send</button></div>
 </form>
 

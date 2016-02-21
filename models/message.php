@@ -1,9 +1,11 @@
 <?php
 
-class Message extends Model {
+class Message extends Model
+{
 
-    public function save($data, $id = null){
-        if ( !isset($data['name']) || !isset($data['email']) || !isset($data['message']) ){
+    public function save($data, $id = null)
+    {
+        if (!isset($data['name']) || !isset($data['email']) || !isset($data['message'])  ) {
             return false;
         }
 
@@ -12,12 +14,14 @@ class Message extends Model {
         $email = $this->db->escape($data['email']);
         $message = $this->db->escape($data['message']);
 
-        if ( !$id ){ // Add new record
+        if (!$id) { // Add new record
             $sql = "
                 insert into messages
                    set name = '{$name}',
                        email = '{$email}',
                        message = '{$message}'
+
+
             ";
         } else { // Update existing record
             $sql = "
@@ -33,13 +37,15 @@ class Message extends Model {
 
     }
 
-    public function getList(){
+    public function getList()
+    {
         $sql = "select * from messages where 1 order by  date_time";
         return $this->db->query($sql);
     }
 
-    public function sortBy($sort){
-        $sql = "select * from messages where 1 order by".$sort;
+    public function sortBy($sort)
+    {
+        $sql = "select * from messages where 1 order by" . $sort;
         return $this->db->query($sql);
     }
 
