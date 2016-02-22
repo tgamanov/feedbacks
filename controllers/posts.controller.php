@@ -41,33 +41,18 @@ class PostsController extends Controller
 
                     return $key;
                 }
-//                $query_age = (isset($_GET['query_age']) ? $_GET['query_age'] : null);
                 $file_ext = isset($file_name)?explode('.',$file_name):null;
-//                $file_ext = explode('.', $file_name);
                 $file_ext = strtolower(end($file_ext));
                 $file_tmp = isset($image['tmp_name'])?$image['tmp_name']:null;
-//                $file_tmp = $image['tmp_name'];
                 $file_name = isset($file_ext)?random_string(7) . '.' . $file_ext:null;
-//                $file_name = random_string(7) . '.' . $file_ext;
                 $photo_path4DB = isset($file_name)?DS . $location . DS . $file_name:null;
-//                $photo_path4DB = DS . $location . DS . $file_name;
 
-                $allowed_ext = array("jpg", "jpeg", "gif", "png");
+                move_uploaded_file($file_tmp, $location . '/' . $file_name);//upload photo to disk
 
-                if (in_array($file_ext, $allowed_ext) === false) {//check if extension of the file is correct
-
-                    echo '<div class="notice-box bg-danger padding-30">Extension of the photo is not allowed, please choose next type of the file:  JPEG, GIF or PNG.</div>';
-                    echo "<meta http-equiv=\"refresh\" content=\"15;url=/\" />";
-                    return false;
-                } else {
-                    move_uploaded_file($file_tmp, $location . '/' . $file_name);//upload photo to disk
-                    $convert = new SimpleImage();//resize photo to 320*240
-                    $convert->load($location . '/' . $file_name);
-                    $convert->resize(320, 240);
-                    $convert->save($location . '/' . $file_name);
-                }
-
-
+                $convert = new SimpleImage();//resize photo to 320*240
+                $convert->load($location . '/' . $file_name);
+                $convert->resize(320, 240);
+                $convert->save($location . '/' . $file_name);
             }
                 $this->model->write2db($name, $email, $message, $photo_path4DB);
                 Session::setFlash('Message has been sent for validation.');
