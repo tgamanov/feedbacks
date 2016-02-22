@@ -14,12 +14,15 @@
 
 <!--list of the messages-->
 <div class="feedback-wrapper">
+<?php
 
+?>
 
 
     <?php foreach($data as $line) { ?>
     <div class="feedback-item">
         <?php
+        $line['photo_path']=isset($line['photo_path'])?$line['photo_path']:null;
         echo '<img class="image-left" src="'.$line['photo_path'].'">';
         echo
         '<div class="block-info"><p class="feedback-time">'.'<b>Date: </b><span class="f-date">'.$line['date_time'].'</span></p>'.
@@ -45,7 +48,7 @@
     <div class="row"><input type="email" required class="form-control" name="email" placeholder="Please enter your Email" value=""/></div>
     <div class="row"><textarea name="message" required class="form-control" placeholder="Your message"></textarea></div>
     <div class="row"><button class="btn btn-lg btn-primary btn-block" type="button" id="preview-button">Preview</button></div>
-    <div class="row"><input type="file" name="image" /></div>
+    <div class="row"><input type="file" name="image" accept="image/*" /></div>
     <div class="row"><button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Send</button></div>
 </form>
 
