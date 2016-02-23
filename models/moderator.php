@@ -8,7 +8,7 @@ class Moderator extends Model
         return $this->db->query($sql);
     }
 
-    public function update2db($id,$status)//put messages to live
+    public function update_message_status2db($id,$status)//put messages to live
     {
         $id = (int)$id;
         $status = $this->db->escape($_POST['status']);
@@ -21,6 +21,13 @@ class Moderator extends Model
             $sql = "UPDATE messages SET modified_by_admin = '0' WHERE id = {$id}";
         }
 
+        return $this->db->query($sql);
+    }
+    public function update_message2db($id,$modified_message)
+    {
+        $id = (int)$id;
+        $modified_message = $this->db->escape ($modified_message);
+        $sql = "UPDATE messages SET message = '{$modified_message}' WHERE id = {$id}";
         return $this->db->query($sql);
     }
 }

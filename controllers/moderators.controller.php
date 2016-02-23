@@ -32,8 +32,13 @@ class ModeratorsController extends Controller
             $this->data = $this->model->getList();
             if (isset($_POST['update'])) {
                 $id = $_POST['id_of_the_post'];
-                $status = $_POST['status'];
-                $this->model->update2db($id, $status);
+                $status = isset($_POST['status'])?$_POST['status']:null ;
+                if ($_POST['original_message']!=$_POST['modified_message'])
+                {
+                    $modified_message =$_POST['modified_message']."(this message has been modified by moderator)";
+                    $this->model->update_message2db($id,$modified_message);
+                }
+                $this->model->update_message_status2db($id, $status);
                 Router::redirect('/moderators/index');
             }
         } else {

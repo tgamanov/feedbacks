@@ -3,31 +3,46 @@
 
     <?php foreach($data as $line) { ?>
     <div class="feedback-item">
+        <?='<p>'.'<b>Date: </b>'.$line['date_time'].'</p>'.
+        '<p>'.'<b>Name: </b>'.$line['name'].'</p>'.
+        '<p>'.'<b>Email: </b>'.$line['email'].'</p>';?>
         <?= '<img class="image-left" src="'.$line['photo_path'].'">';
         echo '
         <div class="block-info">
             <form action="" method="post">';
                 if ($line['modified_by_admin'] == 0)
                 {
-                echo '<div class="margin-baseline"><label>Visible or invisible</label> <input type="checkbox" name="status"
-                                                                              value="1" class="checkbox-position"/></div>';
+                echo '
+                <div class="margin-baseline">
+                <label>Visible or invisible</label>
+                <input type="checkbox" name="status" value="1" class="checkbox-position"/>
+                </div>';
                 }else
                 {
-                echo '<div class="margin-baseline"><label>Visible or invisible</label> <input type="checkbox" name="status"
-                                                                              value="1" checked="checked"
-                                                                              class="checkbox-position"/></div>';
+                echo '
+                <div class="margin-baseline">
+                <label>Visible or invisible</label>
+                <input type="checkbox" name="status" value="1" checked="checked" class="checkbox-position"/>
+                </div>';
                 }
+
                 echo '<input type="hidden" name="id_of_the_post" value="'.$line['id'].'">'.
-                '
-                <div class="margin-baseline"><button class="btn btn-bg btn-primary btn-block" type="submit" name="update" style="max-width: 150px">Update</button></div>
+                     '<input type="hidden" name="original_message" value="'.$line['message'].'">';
+                echo '
+                <div>
+                <label>Message</label>
+                <textarea name="modified_message" class="form-control">'.$line['message'].'</textarea>
+                </div>'.
+                '<div class="margin-baseline">
+                    <button class="btn btn-bg btn-primary btn-block" type="submit" name="update"
+                            style="max-width: 150px">Update
+                    </button>
+                </div>
             </form>
             ';
 
             echo
-            '<p class="feedback-time">'.'<b>Date: </b><span class="f-date">'.$line['date_time'].'</span></p>'.
-            '<p class="feedback-name">'.'<b>Name: </b><span class="f-name">'.$line['name'].'</span></p>'.
-            '<p class="feedback-email">'.'<b>Email: </b><span class="f-email">'.$line['email'].'</span></p>'.
-            '<p class="feedback-message">'.'<b>Message: </b><span class="f-message">'.$line['message'].'</span></p>
+            '
         </div>
         ';
         ?>
