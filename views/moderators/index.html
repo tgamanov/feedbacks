@@ -27,7 +27,7 @@
                 }
 
                 echo '<input type="hidden" name="id_of_the_post" value="'.$line['id'].'">'.
-                     '<input type="hidden" name="original_message" value="'.$line['message'].'">';
+                     '<input type="hidden" name="original_message" value="'.htmlentities($line['message']).'">';
                 echo '
                 <div>
                 <label>Message</label>
