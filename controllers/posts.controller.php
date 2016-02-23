@@ -24,7 +24,7 @@ class PostsController extends Controller
             $image = isset( $_FILES['image'])? $_FILES['image']:null ;
 //            $image = $_FILES['image'];
 
-            if (isset($image))//check if file has been uploaded
+            if (isset($image) && $image['size']>0)//check if file has been uploaded
             {
 
                 $file_name = $image['name'];
