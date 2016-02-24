@@ -10,7 +10,7 @@
         echo '
         <div class="block-info">
             <form action="" method="post">';
-                if ($line['modified_by_admin'] == 0)
+                if ($line['status'] == 0)
                 {
                 echo '
                 <div class="margin-baseline">
@@ -25,6 +25,7 @@
                 <input type="checkbox" name="status" value="1" checked="checked" class="checkbox-position"/>
                 </div>';
                 }
+
 
                 echo '<input type="hidden" name="id_of_the_post" value="'.$line['id'].'">'.
                      '<input type="hidden" name="original_message" value="'.htmlentities($line['message']).'">';
@@ -47,6 +48,8 @@
         ';
         ?>
     </div>
-    <?php } ?>
+    <?php }
+     ?>
+
 </div>
 

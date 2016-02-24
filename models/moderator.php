@@ -14,11 +14,11 @@ class Moderator extends Model
         $status = $this->db->escape($_POST['status']);
         if ($status == 1)
         {
-            $sql = "UPDATE messages SET modified_by_admin = '1' WHERE id = {$id}";
+            $sql = "UPDATE messages SET status = '1' WHERE id = {$id}";
         }
         else
         {
-            $sql = "UPDATE messages SET modified_by_admin = '0' WHERE id = {$id}";
+            $sql = "UPDATE messages SET status = '0' WHERE id = {$id}";
         }
 
         return $this->db->query($sql);
@@ -27,7 +27,7 @@ class Moderator extends Model
     {
         $id = (int)$id;
         $modified_message = $this->db->escape ($modified_message);
-        $sql = "UPDATE messages SET message = '{$modified_message}' WHERE id = {$id}";
+        $sql = "UPDATE messages SET message = '{$modified_message}', modified_by_admin = '1' WHERE id = {$id}";
         return $this->db->query($sql);
     }
 }

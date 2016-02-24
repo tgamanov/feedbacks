@@ -35,7 +35,7 @@ class ModeratorsController extends Controller
                 $status = isset($_POST['status'])?$_POST['status']:null ;
                 if ($_POST['original_message']!=$_POST['modified_message'])
                 {
-                    $modified_message =$_POST['modified_message']."(this message has been modified by moderator)";
+                    $modified_message =$_POST['modified_message'];
                     $this->model->update_message2db($id,$modified_message);
                 }
                 $this->model->update_message_status2db($id, $status);

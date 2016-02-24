@@ -28,8 +28,15 @@
         '<div class="block-info"><p class="feedback-time">'.'<b>Date: </b><span class="f-date">'.$line['date_time'].'</span></p>'.
         '<p class="feedback-name">'.'<b>Name: </b><span class="f-name">'.$line['name'].'</span></p>'.
         '<p class="feedback-email">'.'<b>Email: </b><span class="f-email">'.$line['email'].'</span></p>'.
-        '<p class="feedback-message">'.'<b>Message: </b><span class="f-message">'.$line['message'].'</span></p>'.
+        '<p class="feedback-message">'.'<b>Message';
+
+            if ($line['modified_by_admin']==1)
+        {echo ' (has been modified by moderator):';}
+
+        echo
+        '<br><span class="f-message">'.$line['message'].'</span></p>'.
         '</div>';
+
         ?>
     </div>
     <?php } ?>
